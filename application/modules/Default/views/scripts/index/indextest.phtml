@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title><?php echo $this->escape($this->title); ?></title>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="/js/bootstrap.min.js"></script>
+
+
+        <!-- Bootstrap -->
+        <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+
+        <link href="http://getbootstrap.com/examples/jumbotron/jumbotron.css" rel="stylesheet">
+        <link href="/css/main.css" rel="stylesheet"> 
+        <link id="scrollUpTheme" rel="stylesheet" href="/css/themes/pill.css">
+
+        <script src="/js/jquery.scrollUp.min.js"></script>
+        <script>
+
+            $(function() {
+                $.scrollUp({
+                    scrollName: 'scrollUp', // Element ID
+                    scrollDistance: 10, // Distance from top/bottom before showing element (px)
+                    scrollFrom: 'top', // 'top' or 'bottom'
+                    scrollSpeed: 300, // Speed back to top (ms)
+                    easingType: 'linear', // Scroll to top easing (see http://easings.net/)
+                    animation: 'fade', // Fade, slide, none
+                    animationSpeed: 200, // Animation speed (ms)
+                    scrollTrigger: false, // Set a custom triggering element. Can be an HTML string or jQuery object
+                    scrollTarget: false, // Set a custom target element for scrolling to. Can be element or number
+                    scrollText: 'ВВЕРХ', // Text for element, can contain HTML
+                    scrollTitle: false, // Set a custom <a> title if required.
+                    scrollImg: false, // Set true to use image
+                    activeOverlay: false, // Set CSS color to display scrollUp active point, e.g '#00FFFF'
+                    zIndex: 2147483647           // Z-Index for the overlay
+                });
+            });
+        </script>
+        <script src="http://getbootstrap.com/assets/js/ie-emulation-modes-warning.js"></script>
+        <script src="http://getbootstrap.com/assets/js/ie-emulation-modes-warning.js"></script>
+        <style type="text/css"></style>
+
+
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        <link rel="stylesheet" type="text/css" href="/js/ext/resources/css/ext-all.css"/>
+        <link rel="stylesheet" type="text/css" href="/js/ext/adapter/jquery/ext-jquery-adapter.js"/>
+        <!-- GC -->
+        <!-- LIBS -->
+        <script type="text/javascript" src="/js/ext/adapter/ext/ext-base.js"></script>
+        <!-- ENDLIBS -->
+        <script type="text/javascript" src="/js/ext/ext-all.js"></script>
+
+        <!-- Common Styles for the examples -->
+
+    <body>
+<script>
+    
+    
+           var store = new Ext.data.JsonStore({
+                url: 'http://zf1-stud.local/news/list?format=json',
+                root: 'news',
+                idProperty: 'id',
+                fields: ['id', 'head', 'anons', 'time_cd', 'txt'],
+                remoteSort: true
+            });
+            Ext.onReady(function() {
+                var grid = new Ext.grid.GridPanel({
+            
+            title: 'Новости',
+                    store: store,
+                    
+                    columns: [
+                        {header: "ID", width: 30, dataIndex: 'id',
+                            sortable: true, hidden: true},
+                        {id: 'title', header: "Новости", width: 100,
+                            dataIndex: 'head', sortable: true},
+                        {header: "Анонс", width: 350, dataIndex: 'anons',
+                            sortable: true},
+                        {header: "Создана", width: 120, dataIndex: 'time_cd',
+                            sortable: true, align: 'center'}
+                    ],
+                    autoExpandColumn: 'title',
+                    renderTo: Ext.getBody(),
+                    width: 978,
+                    height: 300,
+                    loadMask: true,
+                    columnLines: true
+                    
+                });
+                store.load();
+                
+                
+                
+            });
+           /* 
+Ext.ns('Example');
+Ext.BLANK_IMAGE_URL = '/js/ext/resources/images/default/s.gif';
+ 
+// example grid pre-configured class
+Example.Grid = Ext.extend(Ext.grid.GridPanel, {
+    initComponent:function() {
+        var config = {
+             store:new Ext.data.JsonStore({
+                 id:'company'
+                ,totalProperty:'totalCount'
+                ,root:'rows'
+                ,url:'get-grid-data.php'
+                ,fields:[
+                    {name:'company'}
+                   ,{name:'price', type:'float'}
+                   ,{name:'change', type:'float'}
+                   ,{name:'pctChange', type:'float'}
+                   ,{name:'lastChange', type:'date', dateFormat:'n/j h:ia'}
+                   ,{name:'industry'}
+                   ,{name:'desc'}
+                ]
+            })
+            ,columns:[{
+                 id:'company'
+                ,header:"Company"
+                ,width:40, sortable:true
+                ,dataIndex:'company'
+            },{
+                 header:"Price"
+                ,width:20
+                ,sortable:true
+                ,renderer:Ext.util.Format.usMoney
+                ,dataIndex:'price'
+            },{
+                 header:"Change"
+                ,width:20
+                ,sortable:true
+                ,dataIndex:'change'
+            },{
+                 header:"% Change"
+                ,width:20
+                ,sortable:true
+                ,dataIndex:'pctChange'
+            },{
+                header:"Last Updated"
+               ,width:20, sortable:true
+               ,renderer:Ext.util.Format.dateRenderer('m/d/Y')
+               ,dataIndex:'lastChange'
+            }]
+            ,viewConfig:{forceFit:true}
+        }; // eo config object
+ 
+        // apply config
+        Ext.apply(this, Ext.apply(this.initialConfig, config));
+ 
+        this.bbar = new Ext.PagingToolbar({
+             store:this.store
+            ,displayInfo:true
+            ,pageSize:10
+        });
+ 
+        // call parent
+        Example.Grid.superclass.initComponent.apply(this, arguments);
+    } // eo function initComponent
+ 
+    ,onRender:function() {
+ 
+        // call parent
+        Example.Grid.superclass.onRender.apply(this, arguments);
+ 
+        // load the store
+        this.store.load({params:{start:0, limit:10}});
+ 
+    } // eo function onRender
+ 
+});
+Ext.reg('examplegrid', Example.Grid);
+    // application main entry point
+Ext.onReady(function() {
+ 
+    Ext.QuickTips.init();
+ 
+    // create viewport with border layout
+    var viewport = new Ext.Viewport({
+         layout:'border'
+        ,id:'vp'
+        ,items:[{
+             region:'north'
+            ,title:'North'
+            ,height:100
+            ,contentEl:'adsense-north'
+        },{
+             region:'center'
+            ,layout:'fit'
+            ,xtype:'examplegrid'
+            ,title:'Center'
+        },{
+             region:'west'
+            ,title:'West'
+            ,width:220
+            ,split:true
+            ,collapsible:true
+        },{
+             region:'east'
+            ,title:'East'
+            ,width:120
+            ,split:true
+            ,collapsible:true
+            ,collapsed:true
+        },{
+             region:'south'
+            ,title:'South'
+            ,height:80
+            ,split:true
+            ,collapsible:true
+            ,collapsed:true
+        }]
+    });*/
+</script>
+<script>
+
+</script>
+
+<!--
+        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="http://zf1-stud.local">Портал</a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="http://zf1-stud.local">Главная</a></li>
+                        <li><a href="news/list">Новости</a></li>
+
+                    </ul>
+                    <!--<form class="navbar-form navbar-left" role="search">
+                      <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                      </div>
+                      <button type="submit" class="btn btn-default">Submit</button>
+                    </form>-->
+                    <!--<ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Меню <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="index">Главная</a></li>
+                          <li><a href="news">Новости</a></li>
+                    <!--<li><a href="#">Something else here</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Separated link</a></li>-->
+                    </ul>
+                    </li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+                <!--<div class="navbar-collapse collapse">
+                  <form class="navbar-form navbar-right" role="form">
+                    <div class="form-group">
+                      <input type="text" placeholder="Email" class="form-control">
+                    </div>
+                    <div class="form-group">
+                      <input type="password" placeholder="Password" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-success">Sign in</button>
+                  </form>-->
+            </div><!--/.navbar-collapse -->
+        </div>
+    </div>
+
+    <!-- Main jumbotron for a primary marketing message or call to action 
+    <div class="jumbotron">
+        <div class="container">
+            <h1>Добро пожаловать!</h1>
+            <p>На тестовый портал Zend Framework1 в стиле Twitter Bootstrap!</p>
+            <p class="text-right">Твердый порядок письменного изложения 
+                какой-либо идеи – это первый шаг к ее претворению в жизнь. В разговоре можно – часто 
+                даже не отдавая себе в этом отчета – высказывать всякого рода смутные и нелепые идеи. 
+                Когда же вы излагаете свои мысли на бумаге, происходит нечто такое, что побуждает вас 
+                вникнуть в конкретные детали. При этом гораздо труднее ввести в заблуждение самого себя 
+                или кого-либо другого. Ли Якокка           
+            </p>
+            
+                        <!--<p><a class="btn btn-primary btn-lg" role="button">Для чего? »</a></p>-->
+        </div>
+    </div>
+    <footer><!--
+        <div class="container"> <div class="col-md-12"><p><ol class="breadcrumb"><li><a href="http://zf1-stud.local">Главная</a></li>
+
+                    <li class="active">Главная</li></ol></p></div> </div>
+    </footer>        
+
+    <div class="container"><div class="col-md-12">
+            <!-- Example row of columns 
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Пример работы с api</h2>
+                    <p>Запрос данных о скорости автомобиля (сторонний api)
+                    <!--<script type="text/javascript" >
+          function showWindow(){
+                  if(!win){
+                          var win = new Ext.Window({
+                                  width:500,
+                                  height:300,
+                                  title: 'Скорость запрашиваемого авто',
+                                  html:'<h1><?php echo $this->escape($this->title); ?><?php
+                        echo '<pre>';
+                        print_r($this->json_data->entries[0]->speed);
+                        ?> КМ.Ч.</h1>',
+                                  layout:'fit',
+                                  bodyStyle:{'background-color': '#FFFFFF'}
+                          })      
+                  }
+                  win.show();
+          }
+          </script>
+
+                    </p>
+                    <p><a class="btn btn-default" href="http://zf1-stud.local/car/speed#" role="button">Детали »</a></p>
+                </div>
+                <div class="col-md-6">
+                    <h2>Новости</h2>
+                    <p>Раздел новостей</p>
+                    <p><a class="btn btn-default" href="http://zf1-stud.local/news/list" role="button">Детали »</a>
+                        <script type="text/javascript">
+            var showWindow = function(response) {
+                var content = Ext.decode(response.responseText);
+                console.log(content);
+                var win = new Ext.Window({
+                    width: 500,
+                    height: 300,
+                    title: 'Аякс экшн',
+                    html: '<h1>' + '<pre>' + content.title + '<br/>' + content.message + '</h1>',
+                    layout: 'fit',
+                    bodyStyle: {'background-color': '#FFFFFF'}
+                });
+                return win;
+
+            }
+
+            Ext.onReady(function() {
+                Ext.get("btn1").on("click", function() {
+                    Ext.Ajax.request({
+                        url: 'http://zf1-stud.local/news/list',
+                        success: function(response) {
+                            showWindow(response).show();
+                        },
+                        failure: function(response, opts) {
+                            console.log('server-side failure with status code ' + response.status);
+                        },
+                        params: {
+                            format: 'json'
+                        }
+                    });
+                }
+                );
+            });
+                        </script>
+                        <a class="btn btn-default" type="button" value="NEWS" id="btn1">ExtJS Window->json object</a></p>
+                </div></div></div></div>
+    <!--<div class="col-md-4">
+      <h2>Опции</h2>
+      <p>Карта, датчики, оповещение  
+      </p>
+      <p><a class="btn btn-default" href="#" role="button">Детали »</a></p>-->
+</div>
+</div>
+<hr>
+<footer>
+</footer>
+
+</div> <!-- /container -->

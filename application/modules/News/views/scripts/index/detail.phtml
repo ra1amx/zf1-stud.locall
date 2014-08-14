@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title><?php echo $this->escape($this->title); ?> | <?php print_r($this->news->head); ?></title>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="/js/bootstrap.min.js"></script>
+        <link id="scrollUpTheme" rel="stylesheet" href="/css/themes/pill.css">
+    
+        <script src="/js/jquery.scrollUp.min.js"></script>
+        <script>
+
+            $(function () {
+    $.scrollUp({
+        scrollName: 'scrollUp',      // Element ID
+        scrollDistance: 10,         // Distance from top/bottom before showing element (px)
+        scrollFrom: 'top',           // 'top' or 'bottom'
+        scrollSpeed: 300,            // Speed back to top (ms)
+        easingType: 'linear',        // Scroll to top easing (see http://easings.net/)
+        animation: 'fade',           // Fade, slide, none
+        animationSpeed: 200,         // Animation speed (ms)
+        scrollTrigger: false,        // Set a custom triggering element. Can be an HTML string or jQuery object
+        scrollTarget: false,         // Set a custom target element for scrolling to. Can be element or number
+        scrollText: 'ВВЕРХ', // Text for element, can contain HTML
+        scrollTitle: false,          // Set a custom <a> title if required.
+        scrollImg: false,            // Set true to use image
+        activeOverlay: false,        // Set CSS color to display scrollUp active point, e.g '#00FFFF'
+        zIndex: 2147483647           // Z-Index for the overlay
+    });
+});
+        </script>
+        <!-- Bootstrap -->
+        <link href="/css/bootstrap.min.css" rel="stylesheet">
+        <link href="http://getbootstrap.com/examples/jumbotron/jumbotron.css" rel="stylesheet">
+        <link href="/css/main.css" rel="stylesheet"> 
+        <script src="http://getbootstrap.com/assets/js/ie-emulation-modes-warning.js"></script>
+        <script src="http://getbootstrap.com/assets/js/ie-emulation-modes-warning.js"></script>
+        <style type="text/css"></style>
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    <body>
+
+        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="http://zf1-stud.local">Портал</a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li> <a href="http://zf1-stud.local">Главная</a></li>
+                        <li class="active"><a href="http://zf1-stud.local/news/list">Новости</a></li>
+
+                    </ul>
+                </div></div><!--/.navbar-collapse -->
+        </div>
+        <!-- Main jumbotron for a primary marketing message or call to action -->
+        <div class="jumbotron">
+            <div class="container">
+                <h1><?php print_r($this->news->head); ?></h1>
+            </div>
+        </div>
+        <div class="container"><div class="row"><div class="col-md-12">
+            <ol class="breadcrumb">
+                <li><a href="http://zf1-stud.local/">Главная</a></li>
+                <li><a href="http://zf1-stud.local/news/list">Новости</a></li>
+                <li class="active"><?php print_r($this->news->head); ?></li>
+            </ol>
+        </div></div>
+    </div>
+        <div class="container"><div class="row"><div class="col-md-12">
+                <p><em>Создана </em><b><?php
+             
+
+
+                        $date = new DateTime($this->news['time_cd']);
+                        $date1 = $date->format('d.m.Y H:i');
+                        echo $date1;
+                        ?></b> | <em>Редактировалась </em><b><?php
+                        $date2 = new DateTime($this->news['time_ed']);
+                        $date3 = $date2->format('d.m.Y H:i');
+                        echo $date3;
+                        ?></b></p>
+                <blockquote>
+                    <p><?php print_r($this->news->anons); ?></p>
+                </blockquote> 
+                <p><?php
+                
+                
+                echo nl2br($this->news->txt); ?>
+                
+                
+                </p>
+                <p class="text-right">
+                    <a class="btn btn-default" role="button" <a href="<?php echo $this->url(array('action' => 'edit'), 'newscrud') ?>"><span class="glyphicon glyphicon-edit"></span> Редактировать</a>
+                        <a class="btn btn-link" role="button" <a href="<?php echo $this->url(array('action' => 'delete'), 'newscrud') ?>">Удалить</a></p>
+                            </div><!-- /container  --></div></div>
+                            <?php //echo "<pre>"; print_r($this->news);?>
+                            <?php
+                            //echo print_r ($this->id);
+                            //print_r($this->news);
+                            //foreach ($this->heads as $head);
+                            //echo $this->escape($head->anons);
+                            ?> 
+                            
